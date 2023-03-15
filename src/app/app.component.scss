@@ -1,0 +1,60 @@
+.cookinshell-app {
+  --app-nav-height: 5vh;
+  height: 100vh;
+  display: flex;
+  &-bar {
+    position: absolute;
+    height: var(--app-nav-height);
+    width: 100%;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    text-align: center;
+
+    &__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      grid-column: 2;
+    }
+  }
+
+  &__immersive-bg {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 49vh;
+
+    &__renderer {
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &__main-bg {
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), #030303);
+    visibility: visible;
+    height: 100vh;
+    width: 100vw;
+    flex: 1;
+    position: absolute;
+    background-size: 100vw 50vh;
+  }
+  &__bg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  &__content {
+    margin-top: var(--app-nav-height);
+    padding: 0.5rem;
+    width: 100%;
+    z-index: 1000;
+  }
+}

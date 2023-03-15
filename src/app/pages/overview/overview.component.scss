@@ -1,0 +1,36 @@
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 12rem);
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0 10vw;
+}
+
+.overview-fab-mobile {
+  display: none;
+}
+.overview-fab-desktop {
+  display: flex;
+  position: absolute;
+  top: calc(6vh);
+  left: 1rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .overview {
+    grid-template-columns: repeat(auto-fit, 5rem) !important;
+    gap: 0.5rem !important;
+    padding: 0 0;
+  }
+
+  .overview-fab-mobile {
+    display: flex;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .overview-fab-desktop {
+    display: none;
+  }
+}

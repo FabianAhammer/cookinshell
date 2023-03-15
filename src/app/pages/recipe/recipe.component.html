@@ -1,0 +1,43 @@
+<div class="recipe" *ngIf="recipe">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Recipe: {{ recipe.name }}</mat-card-title>
+      <mat-card-subtitle
+        >Created at {{ recipe.created | date }}</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <button mat-icon-button *ngIf="!editMode">
+        <mat-icon fontIcon="share"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="cancel()" *ngIf="editMode">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="toggleEditMode()">
+        <mat-icon [fontIcon]="editMode === true ? 'done' : 'edit'"></mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <ng-container *ngIf="editMode">
+    <div *ngFor="let entry of editingRecipe.controls; index as index">
+      <cookin-step-edit
+        [cookingStep]="entry.value"
+        (cookingStepChange)="entry.setValue($event)"
+      ></cookin-step-edit>
+      <mat-divider></mat-divider>
+    </div>
+    <button mat-raised-button color="accent" (click)="addStep()">
+      Add Step
+    </button>
+  </ng-container>
+  <ng-container *ngIf="!editMode">
+    <div *ngFor="let entry of recipe.steps; index as index">
+      <cookin-step-visualization
+        [cookingStep]="entry"
+      ></cookin-step-visualization>
+      <mat-divider></mat-divider>
+    </div>
+  </ng-container>
+  {{ recipe.steps | json }}
+</div>

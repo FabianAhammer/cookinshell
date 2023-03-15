@@ -1,0 +1,39 @@
+<form class="recipe-create" [formGroup]="formGroup">
+  <div mat-dialog-title class="recipe-create__title">Create new Recipe</div>
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input
+        formControlName="name"
+        (keydown.enter)="tryClose()"
+        matInput
+        placeholder="My Recipe"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Symbol</mat-label>
+      <mat-select formControlName="entryType">
+        <mat-option value="IMAGE">Image</mat-option>
+        <mat-option value="ICON">Icon</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Symbol</mat-label>
+      <mat-select formControlName="previewData">
+        <mat-option *ngFor="let option of iconOptions" value="IMAGE">
+          <mat-icon [fontIcon]="option"></mat-icon>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <div mat-dialog-actions class="recipe-create__buttons">
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="formGroup.value"
+      color="accent"
+    >
+      Create
+    </button>
+  </div>
+</form>

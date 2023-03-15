@@ -1,0 +1,23 @@
+<div class="overview">
+  <overview-item
+    [overviewItem]="overviewItem"
+    *ngFor="let overviewItem of dataService.overviewItems | async"
+  ></overview-item>
+</div>
+<button
+  mat-fab
+  color="accent"
+  class="overview-fab-mobile"
+  (click)="openCreateDialog()"
+>
+  <mat-icon>add</mat-icon>
+</button>
+<button
+  mat-fab
+  extended
+  color="accent"
+  class="overview-fab-desktop"
+  (click)="openCreateDialog()"
+>
+  <mat-icon>add</mat-icon> Add Recipe
+</button>

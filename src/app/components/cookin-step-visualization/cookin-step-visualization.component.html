@@ -1,0 +1,28 @@
+<ng-container [ngSwitch]="cookingStep.type">
+  <div *ngSwitchCase="INSTRUCTION">
+    <div class="cookin-step-viz__instruction">
+      <div class="cookin-step-viz__instruction__text">
+        {{ cookingStep.description }}
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="TIMER">
+    <div
+      class="cookin-step-viz__timer"
+      [class.cookin-step-viz__timer--finished]="
+        cookingStep.totalTime <= cookingStep.elapsedTime
+      "
+    >
+      <div class="cookin-sep-viz__timer__widget">
+        <div class="cookin-sep-viz__timer__button">
+          <button mat-icon-button>
+            <mat-icon> play_arrow</mat-icon>
+          </button>
+        </div>
+        <div class="cookin-sep-viz__timer__time">
+          {{ cookingStep.totalTime + "|" + cookingStep.elapsedTime }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

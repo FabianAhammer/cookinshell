@@ -1,0 +1,22 @@
+mat-dialog-content {
+  overflow: hidden;
+  padding: 0.2rem;
+  display: grid;
+
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  grid-column-gap: 16px;
+}
+
+@media only screen and (max-width: 500px) {
+  mat-dialog-content {
+    grid-template-columns: auto;
+  }
+}
+
+.recipe-create {
+  &__buttons {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
