@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter } from 'rxjs';
+import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { CookingStep, Recipe } from 'src/app/types/cooking-entry';
 import { CookinStepUtil } from 'src/app/utility/cooking-step.utility';
-import * as uuid from 'uuid';
 
 @Injectable()
 export class RecipeService {
@@ -21,6 +20,10 @@ export class RecipeService {
       const recipe = recipes.find((recipe) => recipe.id === id);
       this.recipe.next(recipe);
     });
+  }
+
+  public deleteRecipe(): void {
+    this.dataService.removeRecipe(this.recipe.value);
   }
 
   public toggleEditMode() {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RoutesRecognized } from '@angular/router';
 import { filter, map, Observable, tap } from 'rxjs';
+import { NavigationHelper } from './utility/navigation-helper.utility';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { filter, map, Observable, tap } from 'rxjs';
 })
 export class AppComponent {
   public $backNavigation: Observable<boolean>;
+  private navigationHelper = new NavigationHelper();
   constructor(router: Router) {
     // Subscribe to the angular router and get the data from the current route
 
@@ -24,6 +26,6 @@ export class AppComponent {
   }
 
   public navigateBack() {
-    window.history.back();
+    this.navigationHelper.navigateBack();
   }
 }

@@ -7,6 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { RecipeService } from 'src/app/pages/recipe/recipe.service';
 import { CookingStep } from 'src/app/types/cooking-entry';
 import { TypedFormGroup } from 'src/app/types/forms';
 import { CookinStepUtil } from 'src/app/utility/cooking-step.utility';
@@ -30,7 +31,7 @@ export class CookinStepDetailComponent implements OnChanges {
   /**
    *
    */
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, public recipeService: RecipeService) {
     this.formGroup = fb.group({
       id: [uuid.v4()],
       description: [null as string],

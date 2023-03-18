@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Recipe, EntryType, OverviewItem } from '../types/cooking-entry';
+import { OverviewItem, Recipe } from '../types/cooking-entry';
 import { LowLevelDataAccessService } from './low-level-data-access.service';
 
 @Injectable({ providedIn: 'root' })
@@ -8,7 +8,6 @@ export class DataService {
   private readonly DATA_TOKEN = 'COOKING_SHELL_DATA';
 
   private _recipes = new BehaviorSubject<Recipe[]>([]);
-
   public overviewItems: Observable<OverviewItem[]> = this._recipes;
   public cookingEntries: Observable<Recipe[]> = this._recipes;
   constructor() {

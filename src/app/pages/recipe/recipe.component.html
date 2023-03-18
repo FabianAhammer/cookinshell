@@ -51,7 +51,7 @@
 <ng-template #viewingTemplate let-recipe>
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Recipe: {{ recipe.name }}</mat-card-title>
+      <mat-card-title> {{ recipe.name }}</mat-card-title>
       <mat-card-subtitle
         >Created at {{ recipe.created | date }}</mat-card-subtitle
       >
@@ -59,6 +59,9 @@
     <mat-card-actions align="end">
       <button mat-icon-button>
         <mat-icon fontIcon="share"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="deleteRecipe()">
+        <mat-icon fontIcon="delete"></mat-icon>
       </button>
 
       <button mat-icon-button (click)="toggleEditMode()">
