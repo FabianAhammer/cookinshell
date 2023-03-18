@@ -21,6 +21,17 @@ export class RecipeComponent {
     this.recipeService.toggleEditMode();
   }
 
+  public edit() {
+    this.recipeService.toggleEditMode();
+  }
+  public cancel() {
+    this.recipeService.cancelEditMode();
+  }
+
+  public save() {
+    this.recipeService.saveForm();
+  }
+
   public addStep() {
     this.recipeService.addStep();
   }

@@ -1,6 +1,4 @@
-export interface Recipe extends OverviewItem, Detail {
-  created: Date;
-}
+export interface Recipe extends OverviewItem, Detail {}
 
 export interface Detail extends BaseType {
   recipe: Array<IngridientEntry>;
@@ -30,6 +28,7 @@ export interface OverviewItem extends BaseType {
   entryType: EntryType;
   previewData: string;
   name: string;
+  created: Date;
 }
 
 export enum EntryType {

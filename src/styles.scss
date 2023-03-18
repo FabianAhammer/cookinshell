@@ -196,18 +196,18 @@ $mat-accent: (
 $theme-accent: mat.define-palette($mat-accent, main, lighter, darker);
 
 body {
-  --warn-color: #ff0000;
+  --warn-color: #ff8800;
   --warn-lighter-color: #ffb3b3;
-  --warn-darker-color: #ff0000;
+  --warn-darker-color: var(--warn-color);
   --text-warn-color: #{$light-primary-text};
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$light-primary-text};
 }
 $mat-warn: (
-  main: #ff0000,
+  main: var(--warn-color),
   lighter: #ffb3b3,
-  darker: #ff0000,
-  200: #ff0000,
+  darker: var(--warn-color),
+  200: var(--warn-color),
   // For slide toggle,
   contrast:
     (
@@ -275,24 +275,14 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-// .cookinshell-overlay {
-//   padding: 0.5rem;
-//   height: 100%;
-//   width: 60vw;
-// }
-
-// @media only screen and (max-width: 500px) {
-//   .cookinshell-overlay {
-//     padding: 0.25rem;
-//     height: 100%;
-//     width: 90vw;
-//   }
-// }
-
 .cookinshell-textarea {
   width: 90%;
 }
 
 .mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-card-header-text {
   width: 100%;
 }
