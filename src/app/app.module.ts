@@ -19,6 +19,7 @@ import { RecipeComponent } from './pages/recipe/recipe.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { CookinStepDetailComponent } from './components/cookin-step-detail/cookin-step-detail.component';
+import { IngredientEntryDetailComponent } from './components/ingredient-entry-detail/ingredient-entry-detail.component';
 
 const Material = [
   MatTabsModule,
@@ -39,6 +40,7 @@ const Material = [
     RecipeEditComponent,
     RecipeComponent,
     CookinStepDetailComponent,
+    IngredientEntryDetailComponent,
   ],
   imports: [
     ...Material,

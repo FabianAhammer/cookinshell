@@ -26,6 +26,7 @@
   </button>
 </div>
 
+<!-- EDIT -->
 <ng-template #editTemplate let-recipe>
   <mat-card [formGroup]="recipeService.formGroup">
     <mat-card-header>
@@ -54,9 +55,17 @@
     </mat-card-actions>
   </mat-card>
   <mat-divider></mat-divider>
-  <!-- Ingredient List-->
+  <ng-container *ngFor="let ingredient of recipe.ingredients; index as index">
+    <ingredient-entry-detail
+      [editMode]="true"
+      [value]="ingredient"
+      (valueChange)="recipe.ingredients[index] = $event"
+    ></ingredient-entry-detail>
+  </ng-container>
 </ng-template>
+<!-- End Edit -->
 
+<!-- View -->
 <ng-template #viewingTemplate let-recipe>
   <mat-card>
     <mat-card-header>
@@ -79,14 +88,23 @@
     </mat-card-actions>
   </mat-card>
   <mat-divider></mat-divider>
-  <!-- Ingredient List-->
+  <ng-container *ngFor="let ingredient of recipe.ingredients; index as index">
+    <ingredient-entry-detail
+      [editMode]="true"
+      [value]="ingredient"
+      (valueChange)="recipe.ingredients[index] = $event"
+    ></ingredient-entry-detail>
+
+    <mat-divider></mat-divider>
+  </ng-container>
 </ng-template>
+<!-- End View -->
 
 <ng-template #stepsTemplate let-recipe>
   <ng-container *ngFor="let step of recipe.steps; index as index">
     <cookin-step-detail
-      [cookingStep]="step"
-      (cookingStepChange)="recipeService.saveStep($event, index)"
+      [value]="step"
+      (valueChange)="recipeService.saveStep($event, index)"
     ></cookin-step-detail>
   </ng-container>
 </ng-template>

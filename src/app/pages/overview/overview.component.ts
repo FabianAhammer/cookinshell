@@ -26,7 +26,7 @@ export class OverviewComponent {
           entryType: data.entryType,
           name: data.name,
           previewData: data.previewData,
-          recipe: [],
+          ingredients: [],
           steps: [],
         });
       });

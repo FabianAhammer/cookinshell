@@ -1,34 +1,34 @@
-<div *ngIf="cookingStep">
+<div *ngIf="value">
   <ng-container
     *ngIf="editMode === false"
     [ngTemplateOutlet]="viewingCookingStep"
-    [ngTemplateOutletContext]="{ $implicit: cookingStep }"
+    [ngTemplateOutletContext]="{ $implicit: value }"
   ></ng-container>
   <ng-container
     *ngIf="editMode === true"
     [ngTemplateOutlet]="editCookingStep"
-    [ngTemplateOutletContext]="{ $implicit: cookingStep }"
+    [ngTemplateOutletContext]="{ $implicit: value }"
   ></ng-container>
 </div>
 
 <ng-template #viewingCookingStep let-step>
   <mat-card>
     <mat-card-header>
-      <mat-card-title *ngIf="cookingStep?.title">
-        {{ cookingStep.title }}
+      <mat-card-title *ngIf="step?.title">
+        {{ step.title }}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="cookin-step-viz__instruction">
         <div class="cookin-step-viz__instruction__text">
-          {{ cookingStep.description }}
+          {{ step.description }}
         </div>
       </div>
       <div
-        *ngIf="cookingStep?.totalTime"
+        *ngIf="step?.totalTime"
         class="cookin-step-viz__timer"
         [class.cookin-step-viz__timer--finished]="
-          cookingStep.totalTime <= cookingStep.elapsedTime
+          step.totalTime <= step.elapsedTime
         "
       >
         <div class="cookin-sep-viz__timer__widget">
@@ -38,10 +38,7 @@
             </button>
           </div>
           <div class="cookin-sep-viz__timer__time">
-            {{
-              cookingStep?.elapsedTime ??
-                "00:00" + " | " + cookingStep.totalTime
-            }}
+            {{ step?.elapsedTime ?? "00:00" + " | " + step.totalTime }}
           </div>
         </div>
       </div>

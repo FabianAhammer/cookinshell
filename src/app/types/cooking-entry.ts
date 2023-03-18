@@ -1,7 +1,7 @@
 export interface Recipe extends OverviewItem, Detail {}
 
 export interface Detail extends BaseType {
-  recipe: Array<IngridientEntry>;
+  ingredients: Array<IngridientEntry>;
   steps: Array<CookingStep>;
 }
 
@@ -14,9 +14,9 @@ export interface CookingStep extends BaseType {
 }
 
 export interface IngridientEntry extends BaseType {
-  ingredient: Ingredient;
+  ingredient: string;
   amount: number;
-  unit?: string;
+  unit: string;
 }
 export interface Ingredient extends BaseType {
   name: string;
