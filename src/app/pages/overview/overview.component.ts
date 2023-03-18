@@ -20,7 +20,7 @@ export class OverviewComponent {
         if (!data) {
           return;
         }
-        this.dataService.addEntry({
+        this.dataService.addRecipe({
           id: uuid.v4(),
           created: new Date(),
           entryType: data.entryType,

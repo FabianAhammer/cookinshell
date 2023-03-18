@@ -1,4 +1,54 @@
-<div class="recipe" *ngIf="recipe">
+<div class="recipe" *ngIf="recipeService.$recipe | async">
+  <ng-container *ngIf="(recipeService.$editMode | async) === true">
+    <ng-container
+      [ngTemplateOutlet]="editTemplate"
+      [ngTemplateOutletContext]="{ $implicit: recipeService.$recipe | async }"
+    ></ng-container>
+  </ng-container>
+  <ng-container *ngIf="(recipeService.$editMode | async) === false">
+    <ng-container
+      [ngTemplateOutlet]="viewingTemplate"
+      [ngTemplateOutletContext]="{ $implicit: recipeService.$recipe | async }"
+    ></ng-container>
+  </ng-container>
+  <ng-container
+    [ngTemplateOutlet]="stepsTemplate"
+    [ngTemplateOutletContext]="{ $implicit: recipeService.$recipe | async }"
+  ></ng-container>
+  <button
+    *ngIf="(recipeService.$editMode | async) === true"
+    (click)="addStep()"
+    mat-raised-button
+    color="accent"
+  >
+    Add Step
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<ng-template #editTemplate let-recipe>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ recipe.name }}</mat-card-title>
+      <mat-card-subtitle
+        >Created at {{ recipe.created | date }}</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <button mat-icon-button>
+        <mat-icon fontIcon="share"></mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="toggleEditMode()">
+        <mat-icon [fontIcon]="'done'"></mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <!-- Ingredient List-->
+</ng-template>
+
+<ng-template #viewingTemplate let-recipe>
   <mat-card>
     <mat-card-header>
       <mat-card-title>Recipe: {{ recipe.name }}</mat-card-title>
@@ -7,37 +57,24 @@
       >
     </mat-card-header>
     <mat-card-actions align="end">
-      <button mat-icon-button *ngIf="!editMode">
+      <button mat-icon-button>
         <mat-icon fontIcon="share"></mat-icon>
       </button>
-      <button mat-icon-button (click)="cancel()" *ngIf="editMode">
-        <mat-icon fontIcon="close"></mat-icon>
-      </button>
+
       <button mat-icon-button (click)="toggleEditMode()">
-        <mat-icon [fontIcon]="editMode === true ? 'done' : 'edit'"></mat-icon>
+        <mat-icon [fontIcon]="'edit'"></mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>
   <mat-divider></mat-divider>
-  <ng-container *ngIf="editMode">
-    <div *ngFor="let entry of editingRecipe.controls; index as index">
-      <cookin-step-edit
-        [cookingStep]="entry.value"
-        (cookingStepChange)="entry.setValue($event)"
-      ></cookin-step-edit>
-      <mat-divider></mat-divider>
-    </div>
-    <button mat-raised-button color="accent" (click)="addStep()">
-      Add Step
-    </button>
+  <!-- Ingredient List-->
+</ng-template>
+
+<ng-template #stepsTemplate let-recipe>
+  <ng-container *ngFor="let step of recipe.steps; index as index">
+    <cookin-step-detail
+      [cookingStep]="step"
+      (cookingStepChange)="recipeService.saveStep($event, index)"
+    ></cookin-step-detail>
   </ng-container>
-  <ng-container *ngIf="!editMode">
-    <div *ngFor="let entry of recipe.steps; index as index">
-      <cookin-step-visualization
-        [cookingStep]="entry"
-      ></cookin-step-visualization>
-      <mat-divider></mat-divider>
-    </div>
-  </ng-container>
-  {{ recipe.steps | json }}
-</div>
+</ng-template>

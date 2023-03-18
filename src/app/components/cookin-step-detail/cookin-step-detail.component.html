@@ -1,0 +1,101 @@
+<div *ngIf="cookingStep">
+  <ng-container
+    *ngIf="editMode === false"
+    [ngTemplateOutlet]="viewingCookingStep"
+    [ngTemplateOutletContext]="{ $implicit: cookingStep }"
+  ></ng-container>
+  <ng-container
+    *ngIf="editMode === true"
+    [ngTemplateOutlet]="editCookingStep"
+    [ngTemplateOutletContext]="{ $implicit: cookingStep }"
+  ></ng-container>
+</div>
+
+<ng-template #viewingCookingStep let-step>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title *ngIf="cookingStep?.title">
+        {{ cookingStep.title }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="cookin-step-viz__instruction">
+        <div class="cookin-step-viz__instruction__text">
+          {{ cookingStep.description }}
+        </div>
+      </div>
+      <div
+        *ngIf="cookingStep?.totalTime"
+        class="cookin-step-viz__timer"
+        [class.cookin-step-viz__timer--finished]="
+          cookingStep.totalTime <= cookingStep.elapsedTime
+        "
+      >
+        <div class="cookin-sep-viz__timer__widget">
+          <div class="cookin-sep-viz__timer__button">
+            <button mat-icon-button>
+              <mat-icon> play_arrow</mat-icon>
+            </button>
+          </div>
+          <div class="cookin-sep-viz__timer__time">
+            {{
+              cookingStep?.elapsedTime ??
+                "00:00" + " | " + cookingStep.totalTime
+            }}
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-icon-button (click)="deleteAction()">
+        <mat-icon fontIcon="delete"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="edit()">
+        <mat-icon fontIcon="edit"></mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
+<ng-template #editCookingStep let-step>
+  <mat-card [formGroup]="formGroup">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-form-field appearance="fill">
+          <input
+            formControlName="title"
+            matInput
+            placeholder="Title"
+            name="title"
+          />
+        </mat-form-field>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <textarea
+          formControlName="description"
+          matInput
+          placeholder="Description"
+          name="description"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input
+          type="time"
+          formControlName="totalTime"
+          matInput
+          placeholder="Total Time"
+          name="totalTime"
+        />
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="save()">
+        <mat-icon fontIcon="done"></mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>

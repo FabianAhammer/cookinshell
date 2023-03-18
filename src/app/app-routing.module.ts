@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OverviewComponent } from './pages/overview/overview.component';
 import { RecipeComponent } from './pages/recipe/recipe.component';
-import { RecipeResolver } from './services/recipe-resolver.service';
+import { RecipeResolver } from './pages/recipe/recipe-resolver.service';
 
 const routes: Routes = [
   {

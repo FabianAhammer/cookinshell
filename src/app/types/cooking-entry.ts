@@ -1,32 +1,32 @@
-export interface CookingEntry extends OverviewItem, Detail {
-  id: string;
+export interface Recipe extends OverviewItem, Detail {
   created: Date;
 }
 
-export interface Detail {
-  recipe: Array<RecipeEntry>;
-  steps: Array<Partial<CookingStep>>;
+export interface Detail extends BaseType {
+  recipe: Array<IngridientEntry>;
+  steps: Array<CookingStep>;
 }
 
-export interface CookingStep {
-  type: CookingStepType;
+export interface CookingStep extends BaseType {
+  id: string;
+  title: string;
   description: string;
   totalTime: string;
   elapsedTime: string;
 }
 
-export interface RecipeEntry {
+export interface IngridientEntry extends BaseType {
   ingredient: Ingredient;
   amount: number;
   unit?: string;
 }
-export interface Ingredient {
+export interface Ingredient extends BaseType {
   name: string;
   brand?: string;
   note?: string;
 }
 
-export interface OverviewItem {
+export interface OverviewItem extends BaseType {
   entryType: EntryType;
   previewData: string;
   name: string;
@@ -37,7 +37,6 @@ export enum EntryType {
   ICON = 'ICON',
 }
 
-export enum CookingStepType {
-  INSTRUCTION = 0,
-  TIMER = 1,
-}
+export type BaseType = {
+  id: string;
+};

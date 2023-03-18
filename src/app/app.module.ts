@@ -18,8 +18,7 @@ import { OverviewComponent } from './pages/overview/overview.component';
 import { RecipeComponent } from './pages/recipe/recipe.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { CookinStepEditComponent } from './components/cookin-step-edit/cookin-step-edit.component';
-import { CookinStepVisualizationComponent } from './components/cookin-step-visualization/cookin-step-visualization.component';
+import { CookinStepDetailComponent } from './components/cookin-step-detail/cookin-step-detail.component';
 
 const Material = [
   MatTabsModule,
@@ -39,8 +38,7 @@ const Material = [
     OverviewComponent,
     RecipeEditComponent,
     RecipeComponent,
-    CookinStepEditComponent,
-    CookinStepVisualizationComponent,
+    CookinStepDetailComponent,
   ],
   imports: [
     ...Material,

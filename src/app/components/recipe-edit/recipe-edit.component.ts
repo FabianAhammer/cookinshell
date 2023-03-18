@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { EntryType, RecipeEntry } from 'src/app/types/cooking-entry';
+import { EntryType, IngridientEntry } from 'src/app/types/cooking-entry';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -15,7 +15,7 @@ export class RecipeEditComponent {
 
   constructor(
     formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<Partial<RecipeEntry>>
+    public dialogRef: MatDialogRef<Partial<IngridientEntry>>
   ) {
     this.formGroup = formBuilder.group({
       entryType: [{ value: EntryType.ICON, disabled: true }],

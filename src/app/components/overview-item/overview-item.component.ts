@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CookingEntry, OverviewItem } from '../../types/cooking-entry';
+import { Recipe, OverviewItem } from '../../types/cooking-entry';
 import { OverviewItemService } from './overview-item.service';
 
 @Component({
@@ -16,6 +16,6 @@ export class OverviewItemComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   public openRecipe() {
-    this.router.navigate([`recipe/${(this.overviewItem as CookingEntry).id}`]);
+    this.router.navigate([`recipe/${(this.overviewItem as Recipe).id}`]);
   }
 }
