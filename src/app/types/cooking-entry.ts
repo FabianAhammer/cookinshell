@@ -1,3 +1,5 @@
+import { Time } from './timer';
+
 export interface Recipe extends OverviewItem, Detail {}
 
 export interface Detail extends BaseType {
@@ -6,11 +8,10 @@ export interface Detail extends BaseType {
 }
 
 export interface CookingStep extends BaseType {
-  id: string;
   title: string;
   description: string;
-  totalTime: string;
-  elapsedTime: string;
+  totalTime: Time;
+  elapsedTime: Time;
 }
 
 export interface IngridientEntry extends BaseType {

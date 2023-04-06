@@ -1,0 +1,12 @@
+<div [formGroup]="formGroup">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <input
+      type="time"
+      formControlName="time"
+      matInput
+      [placeholder]="placeholder"
+      [name]="name || placeholder"
+    />
+  </mat-form-field>
+</div>

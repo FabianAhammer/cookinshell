@@ -12,13 +12,14 @@ import * as uuid from 'uuid';
 })
 export class IngredientEntryDetailComponent extends BaseEditableComponent<IngridientEntry> {
   constructor(fb: FormBuilder) {
-    super();
-    this.formGroup = fb.group({
-      id: [uuid.v4()],
-      amount: [null as number],
-      ingredient: [null as string],
-      unit: [null as string],
-    });
+    super(
+      fb.group({
+        id: [uuid.v4()],
+        amount: [null as number],
+        ingredient: [null as string],
+        unit: [null as string],
+      })
+    );
   }
 
   public override ngOnChanges(changes: SimpleChanges) {

@@ -15,15 +15,23 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title *ngIf="step?.title">
-        {{ step.title }}
+        <div class="cookin-step-viz__title">
+          {{ step.title }}
+          <div *ngIf="step?.totalTime" class="cookin-step-viz__title__time">
+            {{ step.totalTime }}
+          </div>
+        </div>
       </mat-card-title>
+
+      <mat-card-subtitle>
+        <div>
+          <div class="cookin-step-viz__instruction__text">
+            {{ step.description }}
+          </div>
+        </div>
+      </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div class="cookin-step-viz__instruction">
-        <div class="cookin-step-viz__instruction__text">
-          {{ step.description }}
-        </div>
-      </div>
       <div
         *ngIf="step?.totalTime"
         class="cookin-step-viz__timer"
@@ -75,16 +83,13 @@
           name="description"
         ></textarea>
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Time</mat-label>
-        <input
-          type="time"
-          formControlName="totalTime"
-          matInput
-          placeholder="Total Time"
-          name="totalTime"
-        />
-      </mat-form-field>
+
+      <time-input
+        formControlName="totalTime"
+        label="Total Time"
+        placeholder="HH:MM"
+        [name]="'totalTimeCookingStep' + step.id"
+      ></time-input>
     </mat-card-content>
     <mat-card-actions align="end">
       <button mat-icon-button (click)="cancel()">

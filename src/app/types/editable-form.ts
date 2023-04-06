@@ -20,14 +20,15 @@ export abstract class BaseEditableComponent<T> implements OnChanges {
   @Output()
   public valueChange = new EventEmitter<T>();
 
-  constructor() {}
+  constructor(formGroup: TypedFormGroup<T>) {
+    this.formGroup = formGroup;
+  }
   public ngOnChanges(
     changes: SimpleChanges,
     setEditFunction?: (value: T) => boolean
   ) {
-    if (changes['cookingStep']) {
-      // @ts-ignore
-      this.formGroup.patchValue(this.value);
+    if (changes['value']) {
+      this.setValueToFormGroup(this.value);
       if (setEditFunction && setEditFunction(this.value)) {
         this.edit();
       }
@@ -51,6 +52,11 @@ export abstract class BaseEditableComponent<T> implements OnChanges {
   public cancel() {
     this.editMode = false;
     // @ts-ignore
-    this.formGroup.patchValue(this.value);
+    this.setValueToFormGroup(this.value);
+  }
+
+  public setValueToFormGroup(value: T) {
+    // @ts-ignore
+    this.formGroup.patchValue(value);
   }
 }

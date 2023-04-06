@@ -267,6 +267,7 @@ $altTheme: (
 }
 
 body {
+  --text-color-secondary: rgba(255, 255, 255, 0.7);
   background: #030303;
   color: var(--text-primary-color);
   padding: 0px;
@@ -285,4 +286,8 @@ body {
 
 .mat-mdc-card-header-text {
   width: 100%;
+}
+
+.mat-mdc-card-title {
+  font-size: 1.2em;
 }

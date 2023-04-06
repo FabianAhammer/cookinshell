@@ -1,0 +1,14 @@
+.cookin-step-viz {
+  &__title {
+    display: flex;
+    gap: 0.5rem;
+    &__time {
+      text-align: end;
+      flex: 1;
+      font-size: normal !important;
+      color: var(--text-color-secondary);
+    }
+  }
+  &__timer {
+  }
+}
