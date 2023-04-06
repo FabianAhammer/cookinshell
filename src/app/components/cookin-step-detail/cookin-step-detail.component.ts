@@ -1,7 +1,7 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RecipeService } from 'src/app/pages/recipe/recipe.service';
-import { BaseType, CookingStep } from 'src/app/types/cooking-entry';
+import { CookingStep } from 'src/app/types/cooking-entry';
 import { BaseEditableComponent } from 'src/app/types/editable-form';
 import { Time } from 'src/app/types/timer';
 import { CookinStepUtil } from 'src/app/utility/cooking-step.utility';
@@ -30,6 +30,7 @@ export class CookinStepDetailComponent extends BaseEditableComponent<CookingStep
   }
 
   public override setValueToFormGroup(value: CookingStep) {
+    console.warn('setValueToFormGroup', value);
     this.formGroup.patchValue({
       description: value.description,
       title: value.title,

@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CookinStepDetailComponent } from './components/cookin-step-detail/cookin-step-detail.component';
 import { IngredientEntryDetailComponent } from './components/ingredient-entry-detail/ingredient-entry-detail.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
+import { TimePipePipe } from './pipes/time-pipe.pipe';
 
 const Material = [
   MatTabsModule,
@@ -43,6 +44,7 @@ const Material = [
     CookinStepDetailComponent,
     IngredientEntryDetailComponent,
     TimeInputComponent,
+    TimePipePipe,
   ],
   imports: [
     ...Material,

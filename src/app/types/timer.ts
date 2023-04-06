@@ -6,14 +6,9 @@ export class Time {
       this._seconds = this.parseTime(timestring);
     }
   }
-  public getTimeString(): string {
-    const hours = Math.floor(this._seconds / 3600);
-    const minutes = Math.floor((this._seconds % 3600) / 60);
-    // const seconds = this._seconds % 60;
-    // ${seconds.toString().padStart(2, '0')}
-    return `${hours.toString().padStart(2, '0')}:${minutes
-      .toString()
-      .padStart(2, '0')}`;
+
+  public get seconds(): number {
+    return this._seconds;
   }
 
   public setTime(time: string): void {
@@ -23,7 +18,7 @@ export class Time {
   private parseTime(time: string): number {
     const timeParts = time.split(':');
     if (timeParts.length === 2) {
-      return parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
+      return parseInt(timeParts[0]) * 60 * 60 + parseInt(timeParts[1]) * 60;
     }
     throw 'Failed to parse timer?';
   }

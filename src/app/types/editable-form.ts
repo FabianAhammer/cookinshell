@@ -10,9 +10,10 @@ import { TypedFormGroup } from './forms';
 
 @Directive()
 export abstract class BaseEditableComponent<T> implements OnChanges {
+  public formGroup: TypedFormGroup<T>;
+
   @Input()
   public editMode: boolean = false;
-  public formGroup: TypedFormGroup<T>;
 
   @Input()
   public value: T;
@@ -27,7 +28,7 @@ export abstract class BaseEditableComponent<T> implements OnChanges {
     changes: SimpleChanges,
     setEditFunction?: (value: T) => boolean
   ) {
-    if (changes['value']) {
+    if (changes['value'] && this.formGroup) {
       this.setValueToFormGroup(this.value);
       if (setEditFunction && setEditFunction(this.value)) {
         this.edit();
