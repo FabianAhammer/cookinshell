@@ -28,6 +28,8 @@ import { enteredTimeValidator } from 'src/app/validators/time.validator';
     },
   ],
 })
+
+// TODO implement android like 3 slider input for time
 export class TimeInputComponent
   implements ControlValueAccessor, OnInit, OnChanges
 {
