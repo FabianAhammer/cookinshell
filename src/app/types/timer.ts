@@ -1,14 +1,10 @@
 export class Time {
-  private _seconds: number;
+  public _seconds: number;
 
   constructor(timestring?: string) {
     if (timestring) {
       this._seconds = this.parseTime(timestring);
     }
-  }
-
-  public get seconds(): number {
-    return this._seconds;
   }
 
   public setTime(time: string): void {
@@ -17,8 +13,14 @@ export class Time {
 
   private parseTime(time: string): number {
     const timeParts = time.split(':');
-    if (timeParts.length === 2) {
-      return parseInt(timeParts[0]) * 60 * 60 + parseInt(timeParts[1]) * 60;
+    if (timeParts.length === 3) {
+      const hours = parseInt(timeParts[0]);
+      const minutes = parseInt(timeParts[1]);
+      const seconds = parseInt(timeParts[2]);
+      if (hours >= 0 || minutes >= 0 || seconds >= 0) {
+        return hours * 3600 + minutes * 60 + seconds;
+      }
+      return 0;
     }
     throw 'Failed to parse timer?';
   }

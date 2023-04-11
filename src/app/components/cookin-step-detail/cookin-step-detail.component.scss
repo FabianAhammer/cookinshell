@@ -10,5 +10,11 @@
     }
   }
   &__timer {
+    justify-content: center;
+    display: flex;
+    &__button {
+      justify-content: center;
+      display: flex;
+    }
   }
 }

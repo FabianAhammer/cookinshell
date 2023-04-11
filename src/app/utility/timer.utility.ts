@@ -1,11 +1,17 @@
+import * as moment from 'moment';
 import { Time } from '../types/timer';
 // TODO impl time with HH:MM:SS
 export function getTimeString(time: Time): string {
-  const _seconds = time.seconds;
-  const seconds = Math.floor(_seconds / 3600);
-  const minutes = Math.floor((_seconds % 3600) / 60);
-  const hours = Math.floor(_seconds / 3600);
-  return `${hours.toString().padStart(2, '0')}:${minutes
-    .toString()
-    .padStart(2, '0')}`;
+  const totalSeconds = time._seconds;
+
+  // Add hours,moments,seconds to moment object, and humainze the output, return the hh:mm:ss string
+  const hours = moment.duration(totalSeconds, 'seconds').hours();
+  const minutes = moment.duration(totalSeconds, 'seconds').minutes();
+  const seconds = moment.duration(totalSeconds, 'seconds').seconds();
+
+  return `${toDisplay(hours)}:${toDisplay(minutes)}:${toDisplay(seconds)}`;
+}
+
+export function toDisplay(value: number): string {
+  return value.toString().padStart(2, '0');
 }
