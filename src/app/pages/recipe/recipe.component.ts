@@ -36,6 +36,10 @@ export class RecipeComponent {
     this.recipeService.addStep();
   }
 
+  public addIngridient() {
+    this.recipeService.addIngridient();
+  }
+
   public deleteRecipe() {
     this.recipeService.deleteRecipe();
     this.navigationHelper.navigateBack();

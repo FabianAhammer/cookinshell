@@ -7,6 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { TypedFormGroup } from './forms';
+import { CookinStepUtil } from '../utility/cooking-step.utility';
 
 @Directive()
 export abstract class BaseEditableComponent<T> implements OnChanges {
@@ -52,7 +53,6 @@ export abstract class BaseEditableComponent<T> implements OnChanges {
 
   public cancel() {
     this.editMode = false;
-    // @ts-ignore
     this.setValueToFormGroup(this.value);
   }
 

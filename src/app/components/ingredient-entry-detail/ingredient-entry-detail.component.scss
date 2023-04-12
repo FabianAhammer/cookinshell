@@ -1,0 +1,16 @@
+.ingredient-entry-detail {
+  &__display {
+    border-bottom: #666;
+    display: flex;
+    gap: 0.2rem;
+    &__ingredient {
+      flex: 1;
+    }
+    &__amount {
+      font-weight: 600;
+    }
+    &__unit {
+      color: var(--text-color-secondary);
+    }
+  }
+}

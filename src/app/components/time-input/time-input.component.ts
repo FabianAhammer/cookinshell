@@ -58,41 +58,50 @@ export class TimeInputComponent
   constructor(fb: FormBuilder) {
     this.formGroup = fb.group({
       time: [null as string, enteredTimeValidator],
+      timeEnabled: [true],
     });
   }
   public ngOnInit(): void {
-    this.formGroup.valueChanges.subscribe((value) => {
-      this.value = new Time(value.time);
+    this.formGroup.controls['time'].valueChanges.subscribe((value) => {
+      if (value) {
+        this.value = new Time(value);
+      }
       this.valueChange.emit(this.value);
       this.onChange(this.value);
       this.onTouched(this.value);
     });
+    this.formGroup.controls['timeEnabled'].valueChanges.subscribe((value) => {
+      if (value && this.formGroup.controls['time'].disabled) {
+        this.formGroup.controls['time'].patchValue('00:00:00');
+        this.formGroup.controls['time'].enable();
+        this.formGroup.updateValueAndValidity();
+      } else if (!value && !this.formGroup.controls['time'].disabled) {
+        this.formGroup.controls['time'].patchValue(null);
+        this.formGroup.controls['time'].disable();
+        this.formGroup.updateValueAndValidity();
+      }
+    });
   }
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['value']) {
-      this.setFgValue(this.value);
+      this.setTimeValue(this.value);
     }
   }
-  private setFgValue(value: Time) {
-    if (!value) {
+  private setTimeValue(value: Time) {
+    if (!value?._seconds) {
       this.formGroup.patchValue({
-        time: null,
+        timeEnabled: false,
       });
+      console.warn('null value, setting null');
     }
-    if (typeof value === 'string') {
-      this.formGroup.patchValue({
-        time: value,
-      });
-    } else {
-      this.formGroup.patchValue({
-        time: getTimeString(value),
-      });
-    }
+    this.formGroup.patchValue({
+      time: getTimeString(value),
+    });
   }
 
   public writeValue(time: Time): void {
     this.value = time;
-    this.setFgValue(this.value);
+    this.setTimeValue(this.value);
   }
   public registerOnChange(fn: any): void {
     this.onChange = fn;

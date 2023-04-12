@@ -2,6 +2,9 @@ import * as moment from 'moment';
 import { Time } from '../types/timer';
 // TODO impl time with HH:MM:SS
 export function getTimeString(time: Time): string {
+  if (!time?._seconds) {
+    return null;
+  }
   const totalSeconds = time._seconds;
 
   // Add hours,moments,seconds to moment object, and humainze the output, return the hh:mm:ss string

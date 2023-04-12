@@ -32,11 +32,11 @@ export class CookinStepDetailComponent extends BaseEditableComponent<CookingStep
   public override setValueToFormGroup(value: CookingStep) {
     console.warn('setValueToFormGroup', value);
     this.formGroup.patchValue({
-      description: value.description,
-      title: value.title,
-      id: value.id,
-      totalTime: value.totalTime,
-      elapsedTime: value.elapsedTime,
+      description: value?.description,
+      title: value?.title,
+      id: value?.id,
+      totalTime: value?.totalTime,
+      elapsedTime: value?.elapsedTime,
     });
   }
 }

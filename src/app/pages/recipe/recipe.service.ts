@@ -5,6 +5,7 @@ import { DataService } from 'src/app/services/data.service';
 import {
   CookingStep,
   EntryType,
+  IngridientEntry,
   OverviewItem,
   Recipe,
 } from 'src/app/types/cooking-entry';
@@ -94,6 +95,43 @@ export class RecipeService {
     const recipe = this.recipe.value;
     const steps = recipe.steps;
     steps.push(CookinStepUtil.createCookingStep());
+  }
+
+  public saveIngridient(ingridient: IngridientEntry, index: number) {
+    if (ingridient === null) {
+      this.deleteIngridient(index);
+      return;
+    }
+    const recipe = this.recipe.value;
+    const ingridients = recipe.ingredients;
+    if (ingridients.find((e) => e.id === ingridient.id)) {
+      const index = ingridients.findIndex((e) => e.id === ingridient.id);
+      ingridients.splice(index, 1);
+      ingridients.splice(index, 0, ingridient);
+    } else {
+      ingridients.push(ingridient);
+    }
+    this.saveRecipe(recipe);
+    this.recipe.next(recipe);
+  }
+
+  public deleteIngridient(index: number) {
+    const recipe = this.recipe.value;
+    const ingridients = recipe.ingredients;
+    ingridients.splice(index, 1);
+    this.saveRecipe(recipe);
+    this.recipe.next(recipe);
+  }
+
+  public addIngridient() {
+    const recipe = this.recipe.value;
+    const ingridients = recipe.ingredients;
+    ingridients.push({
+      id: uuid.v4(),
+      ingredient: null,
+      amount: null,
+      unit: null,
+    });
   }
 
   public saveForm() {

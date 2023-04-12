@@ -12,6 +12,19 @@
     ></ng-container>
   </ng-container>
   <ng-container
+    [ngTemplateOutlet]="ingridientTemplate"
+    [ngTemplateOutletContext]="{ $implicit: recipeService.$recipe | async }"
+  ></ng-container>
+  <button
+    *ngIf="(recipeService.$editMode | async) === true"
+    (click)="addIngridient()"
+    mat-raised-button
+    color="accent"
+  >
+    Add Ingridient
+    <mat-icon>add</mat-icon>
+  </button>
+  <ng-container
     [ngTemplateOutlet]="stepsTemplate"
     [ngTemplateOutletContext]="{ $implicit: recipeService.$recipe | async }"
   ></ng-container>
@@ -55,13 +68,6 @@
     </mat-card-actions>
   </mat-card>
   <mat-divider></mat-divider>
-  <ng-container *ngFor="let ingredient of recipe.ingredients; index as index">
-    <ingredient-entry-detail
-      [editMode]="true"
-      [value]="ingredient"
-      (valueChange)="recipe.ingredients[index] = $event"
-    ></ingredient-entry-detail>
-  </ng-container>
 </ng-template>
 <!-- End Edit -->
 
@@ -88,15 +94,6 @@
     </mat-card-actions>
   </mat-card>
   <mat-divider></mat-divider>
-  <ng-container *ngFor="let ingredient of recipe.ingredients; index as index">
-    <ingredient-entry-detail
-      [editMode]="true"
-      [value]="ingredient"
-      (valueChange)="recipe.ingredients[index] = $event"
-    ></ingredient-entry-detail>
-
-    <mat-divider></mat-divider>
-  </ng-container>
 </ng-template>
 <!-- End View -->
 
@@ -106,5 +103,14 @@
       [value]="step"
       (valueChange)="recipeService.saveStep($event, index)"
     ></cookin-step-detail>
+  </ng-container>
+</ng-template>
+
+<ng-template #ingridientTemplate let-recipe>
+  <ng-container *ngFor="let ingredient of recipe.ingredients; index as index">
+    <ingredient-entry-detail
+      [value]="ingredient"
+      (valueChange)="recipeService.saveIngridient($event, index)"
+    ></ingredient-entry-detail>
   </ng-container>
 </ng-template>

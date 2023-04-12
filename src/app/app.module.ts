@@ -22,7 +22,8 @@ import { CookinStepDetailComponent } from './components/cookin-step-detail/cooki
 import { IngredientEntryDetailComponent } from './components/ingredient-entry-detail/ingredient-entry-detail.component';
 import { TimeInputComponent } from './components/time-input/time-input.component';
 import { TimePipePipe } from './pipes/time-pipe.pipe';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 const Material = [
   MatTabsModule,
   MatIconModule,
@@ -33,6 +34,8 @@ const Material = [
   MatSelectModule,
   MatCardModule,
   MatDividerModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
 ];
 @NgModule({
   declarations: [
