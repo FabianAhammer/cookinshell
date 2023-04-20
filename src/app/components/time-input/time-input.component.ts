@@ -88,11 +88,13 @@ export class TimeInputComponent
     }
   }
   private setTimeValue(value: Time) {
+    if (this.value === value) {
+      return;
+    }
     if (!value?._seconds) {
       this.formGroup.patchValue({
         timeEnabled: false,
       });
-      console.warn('null value, setting null');
     }
     this.formGroup.patchValue({
       time: getTimeString(value),

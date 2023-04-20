@@ -16,9 +16,6 @@ export class AppComponent {
 
     this.$backNavigation = router.events.pipe(
       filter((event) => event instanceof RoutesRecognized),
-      tap((event: RoutesRecognized) => {
-        console.log(event.state.root.firstChild?.data?.['allowBackNavigation']);
-      }),
       map((event: RoutesRecognized) => {
         return event.state.root.firstChild?.data?.['allowBackNavigation'];
       })

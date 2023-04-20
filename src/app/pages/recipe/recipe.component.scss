@@ -2,4 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  &__ingredients {
+    padding: 0.5rem;
+    background: var(--elevated-bg, transparent);
+    &__item {
+    }
+  }
 }

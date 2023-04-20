@@ -15,6 +15,7 @@
     [ngTemplateOutlet]="ingridientTemplate"
     [ngTemplateOutletContext]="{ $implicit: recipeService.$recipe | async }"
   ></ng-container>
+  <mat-divider></mat-divider>
   <button
     *ngIf="(recipeService.$editMode | async) === true"
     (click)="addIngridient()"
@@ -36,6 +37,18 @@
   >
     Add Step
     <mat-icon>add</mat-icon>
+  </button>
+  <button
+    *ngIf="
+      (recipeService.$editMode | async) !== true &&
+      (timersElapsed | async) === true
+    "
+    (click)="restartAllTimers()"
+    mat-raised-button
+    color="accent"
+  >
+    Restart Recipe
+    <mat-icon>replay</mat-icon>
   </button>
 </div>
 
@@ -76,9 +89,12 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title> {{ recipe.name }}</mat-card-title>
-      <mat-card-subtitle
-        >Created at {{ recipe.created | date }}</mat-card-subtitle
-      >
+      <mat-card-subtitle>
+        Created at {{ recipe.created | date }}
+      </mat-card-subtitle>
+      <mat-card-subtitle *ngIf="(totalTime | async) != null">
+        {{ totalTime | async | timeByNumberPipe }}
+      </mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions align="end">
       <button mat-icon-button>
@@ -107,10 +123,15 @@
 </ng-template>
 
 <ng-template #ingridientTemplate let-recipe>
-  <ng-container *ngFor="let ingredient of recipe.ingredients; index as index">
-    <ingredient-entry-detail
-      [value]="ingredient"
-      (valueChange)="recipeService.saveIngridient($event, index)"
-    ></ingredient-entry-detail>
-  </ng-container>
+  <div class="recipe__ingredients">
+    <div
+      class="recipe__ingredients__item"
+      *ngFor="let ingredient of recipe.ingredients; index as index"
+    >
+      <ingredient-entry-detail
+        [value]="ingredient"
+        (valueChange)="recipeService.saveIngridient($event, index)"
+      ></ingredient-entry-detail>
+    </div>
+  </div>
 </ng-template>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject, filter, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import {
   CookingStep,
@@ -10,6 +10,7 @@ import {
   Recipe,
 } from 'src/app/types/cooking-entry';
 import { TypedFormGroup } from 'src/app/types/forms';
+import { Time } from 'src/app/types/timer';
 import { CookinStepUtil } from 'src/app/utility/cooking-step.utility';
 import * as uuid from 'uuid';
 
@@ -18,10 +19,22 @@ export class RecipeService {
   public formGroup: TypedFormGroup<OverviewItem>;
   private recipe = new BehaviorSubject<Recipe>(null);
   private editMode = new BehaviorSubject<boolean>(false);
+  private timerId = new BehaviorSubject<string>(null);
   public $recipe = this.recipe
     .asObservable()
     .pipe(filter((recipe) => recipe !== null));
   public $editMode = this.editMode.asObservable();
+  public $timerId = this.timerId.asObservable();
+
+  // Currently used Timer
+  private currentTimer = new BehaviorSubject<InternalCookinStepTimer>(null);
+  public $currentTimer = this.currentTimer.asObservable();
+  public $currentTimerSeconds = this.currentTimer.pipe(
+    filter((timer) => timer !== null),
+    map((timer) => timer?.seconds || 0)
+  );
+  // Interval for the timer
+  private updateTimer: any = null;
 
   constructor(private dataService: DataService, fb: FormBuilder) {
     this.formGroup = fb.group({
@@ -34,6 +47,14 @@ export class RecipeService {
     this.$recipe.subscribe((recipe) => {
       if (this.haveOverviewItemChanged(recipe))
         this.formGroup.patchValue(recipe);
+    });
+
+    this.$timerId.subscribe((id) => {
+      if (!id && this.updateTimer) {
+        this.stopTimer();
+      } else if (id) {
+        this.startTimer(this.recipe.value.steps.find((e) => e.id === id));
+      }
     });
   }
 
@@ -142,6 +163,7 @@ export class RecipeService {
     this.recipe.next(recipe);
     this.cancelEditMode();
   }
+
   private haveOverviewItemChanged(recipe: Recipe): boolean {
     return (
       recipe.name !== this.formGroup.value.name ||
@@ -150,4 +172,81 @@ export class RecipeService {
       recipe.previewData !== this.formGroup.value.previewData
     );
   }
+
+  /**
+   * Timer service
+   */
+  public restartAllTimers() {
+    this.deactivateCurrentTimer();
+    const recipe = this.recipe.value;
+    recipe.steps.forEach((step) => {
+      step.elapsedTime = null;
+    });
+    this.saveRecipe(recipe);
+  }
+
+  public toggleTimer(id: string) {
+    const lastId = this.timerId.value;
+    this.deactivateCurrentTimer();
+    if (lastId !== id) {
+      this.activateCurrentTimer(id);
+    }
+  }
+
+  public fastForwardStepTimer(id: string): void {
+    this.deactivateCurrentTimer();
+    const recipe = this.recipe.value;
+    const step = recipe.steps.find((e) => e.id === id);
+    step.elapsedTime = step.totalTime;
+    this.saveRecipe(recipe);
+  }
+
+  public resetStepTimer(id: string): void {
+    this.deactivateCurrentTimer();
+    const recipe = this.recipe.value;
+    const step = recipe.steps.find((e) => e.id === id);
+    step.elapsedTime = null;
+    this.saveRecipe(recipe);
+  }
+
+  private activateCurrentTimer(id: string) {
+    this.timerId.next(id);
+  }
+  private deactivateCurrentTimer() {
+    this.timerId.next(null);
+  }
+
+  private startTimer(step: CookingStep) {
+    const startSeconds = step.elapsedTime?._seconds || 0;
+    const timer = {
+      id: step.id,
+      seconds: startSeconds,
+    };
+    this.currentTimer.next(timer);
+    this.updateTimer = setInterval(() => {
+      timer.seconds++;
+      this.currentTimer.next(timer);
+      if (timer.seconds === step.totalTime._seconds) {
+        this.stopTimer();
+      }
+    }, 1000);
+  }
+
+  private stopTimer() {
+    clearInterval(this.updateTimer);
+    const currentTimer = this.currentTimer.value;
+    this.currentTimer.next(null);
+    const recipe = this.recipe.value;
+    const step = recipe.steps.find((e) => e.id === currentTimer?.id);
+    if (step) {
+      step.elapsedTime = new Time();
+      step.elapsedTime._seconds = currentTimer.seconds;
+      this.saveRecipe(recipe);
+    }
+  }
+}
+
+interface InternalCookinStepTimer {
+  id: string;
+  seconds: number;
 }

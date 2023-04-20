@@ -156,6 +156,7 @@ body {
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
   --background-color: #{$dark-background};
+  --elevated-bg: #{$dark-bg-lighter-5};
 }
 $mat-primary: (
   main: #ffffff,
@@ -267,7 +268,7 @@ $altTheme: (
 }
 
 body {
-  --text-color-secondary: rgba(255, 255, 255, 0.7);
+  --text-color-secondary: rgba(255, 255, 255, 0.527);
   background: #030303;
   color: var(--text-primary-color);
   padding: 0px;

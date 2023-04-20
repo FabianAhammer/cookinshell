@@ -26,17 +26,24 @@ export class Time {
   }
 
   /**
-   * Returns the timer which has the smallest value
-   * @param other
    * @returns
+   * 1 if the current time is greater than the other time
+   * -1 if the current time is less than the other time
+   * 0 if they are equal
    */
-  public compare(other: Time): number {
-    if (this._seconds < other._seconds) {
+  public static compare(first: Time, second: Time): number {
+    if ((first?._seconds || 0) < (second?._seconds || 0)) {
       return -1;
     }
-    if (this._seconds > other._seconds) {
+    if ((first?._seconds || 0) > (second?._seconds || 0)) {
       return 1;
     }
     return 0;
+  }
+
+  public static fromSeconds(seconds: number): Time {
+    const time = new Time();
+    time._seconds = seconds;
+    return time;
   }
 }

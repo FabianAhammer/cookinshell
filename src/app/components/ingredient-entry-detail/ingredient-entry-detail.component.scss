@@ -1,8 +1,13 @@
+:host {
+  display: flex;
+  align-items: center;
+}
 .ingredient-entry-detail {
   &__display {
     border-bottom: #666;
     display: flex;
     gap: 0.2rem;
+    flex: 1;
     &__ingredient {
       flex: 1;
     }

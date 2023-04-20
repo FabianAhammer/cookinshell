@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +24,9 @@ import { TimeInputComponent } from './components/time-input/time-input.component
 import { TimePipePipe } from './pipes/time-pipe.pipe';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TimeByNumberPipe } from './pipes/time-by-number.pipe.ts.pipe';
+import { TimeDifferencePipe } from './pipes/time-difference.pipe';
+import { NumberTimeDifferencePipe } from './pipes/number-time-difference.pipe';
 const Material = [
   MatTabsModule,
   MatIconModule,
@@ -48,11 +51,15 @@ const Material = [
     IngredientEntryDetailComponent,
     TimeInputComponent,
     TimePipePipe,
+    TimeByNumberPipe,
+    TimeDifferencePipe,
+    NumberTimeDifferencePipe,
   ],
   imports: [
     ...Material,
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
   ],

@@ -1,5 +1,5 @@
 import { Component, SimpleChanges } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { RecipeService } from 'src/app/pages/recipe/recipe.service';
 import { CookingStep } from 'src/app/types/cooking-entry';
 import { BaseEditableComponent } from 'src/app/types/editable-form';
@@ -18,9 +18,10 @@ export class CookinStepDetailComponent extends BaseEditableComponent<CookingStep
       fb.group({
         id: [uuid.v4()],
         description: [null as string],
-        title: [null as string],
+        title: [null as string, [Validators.required]],
         totalTime: [null as Time],
         elapsedTime: [null as Time],
+        completed: [false],
       })
     );
   }
@@ -30,13 +31,47 @@ export class CookinStepDetailComponent extends BaseEditableComponent<CookingStep
   }
 
   public override setValueToFormGroup(value: CookingStep) {
-    console.warn('setValueToFormGroup', value);
     this.formGroup.patchValue({
       description: value?.description,
       title: value?.title,
       id: value?.id,
       totalTime: value?.totalTime,
       elapsedTime: value?.elapsedTime,
+      completed: value?.completed,
     });
+  }
+
+  public get timerAvailable(): boolean {
+    if (!this.value.elapsedTime) {
+      return true;
+    }
+    if (this.value.totalTime._seconds <= this.value.elapsedTime._seconds) {
+      return true;
+    }
+    return false;
+  }
+
+  public override edit() {
+    this.resetStepTimer(this.value.id);
+    super.edit();
+  }
+
+  public toggleTimer() {
+    this.recipeService.toggleTimer(this.value.id);
+  }
+
+  public fastForwardStepTimer(id: string): void {
+    this.recipeService.fastForwardStepTimer(id);
+  }
+  public resetStepTimer(id: string): void {
+    this.recipeService.resetStepTimer(id);
+  }
+
+  public handleCompletedChange(completed: boolean) {
+    this.formGroup.controls.completed.patchValue(completed, {
+      emitEvent: false,
+    });
+    this.value = this.formGroup.value as CookingStep;
+    this.valueChange.emit(this.value);
   }
 }

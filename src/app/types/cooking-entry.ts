@@ -12,6 +12,7 @@ export interface CookingStep extends BaseType {
   description: string;
   totalTime: Time;
   elapsedTime: Time;
+  completed: boolean;
 }
 
 export interface IngridientEntry extends BaseType {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationHelper } from 'src/app/utility/navigation-helper.utility';
 import { RecipeService } from './recipe.service';
+import { Observable, filter, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe',
@@ -15,6 +16,35 @@ export class RecipeComponent {
     route.data.subscribe(({ id }) => {
       this.recipeService.setRecipe(id);
     });
+  }
+
+  public get totalTime(): Observable<number> {
+    return this.recipeService.$recipe.pipe(
+      filter((recipe) => !!recipe),
+      map((recipe) =>
+        recipe.steps.reduce(
+          (totalTime, step2) => totalTime + (step2?.totalTime?._seconds || 0),
+          0
+        )
+      )
+    );
+  }
+
+  public get timersElapsed(): Observable<boolean> {
+    return this.recipeService.$recipe.pipe(
+      filter((recipe) => !!recipe),
+      map((recipe) =>
+        recipe.steps.reduce(
+          (restartAllTimers, step2) =>
+            restartAllTimers || step2?.elapsedTime?._seconds > 0,
+          false
+        )
+      )
+    );
+  }
+
+  public restartAllTimers() {
+    this.recipeService.restartAllTimers();
   }
 
   public toggleEditMode() {

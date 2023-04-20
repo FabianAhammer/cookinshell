@@ -1,20 +1,97 @@
 .cookin-step-viz {
+  &__transparent-bg {
+    background: transparent !important;
+  }
   &__title {
     display: flex;
     gap: 0.5rem;
-    &__time {
+    &__suppendix {
       text-align: end;
       flex: 1;
       font-size: normal !important;
       color: var(--text-color-secondary);
+      &--over {
+        color: var(--accent-color);
+      }
     }
+  }
+  &__widget-container {
+    display: flex;
+  }
+  &__start-widget {
+    justify-content: flex-end;
+    width: 2rem;
+    color: var(--text-color-secondary);
+  }
+  &__end-widget {
+    justify-content: flex-end;
+    width: 2rem;
+    color: var(--text-color-secondary);
   }
   &__timer {
     justify-content: center;
     display: flex;
+    flex: 1;
     &__button {
       justify-content: center;
       display: flex;
     }
+  }
+
+  &__inactive-timer {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+    background: var(--elevated-bg);
+  }
+  &__finished-timer {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+    background: #151515;
+  }
+  &__completed {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+    background: #151515;
+  }
+
+  &__active-timer {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+  }
+  &__active-timer::before {
+    content: "";
+    background-image: url("../../../assets/wsbg4000x2250.png");
+    background-size: 1000% 2000%;
+    border: 1px solid #333;
+    animation: right-pan 60s both linear infinite;
+    opacity: 0.35;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+}
+@keyframes right-pan {
+  0% {
+    background-position-x: 0%;
+    background-position-y: 0%;
+  }
+  50% {
+    background-position-x: 100%;
+    background-position-y: 100%;
+  }
+  100% {
+    background-position-y: 0%;
+    background-position-x: 0%;
   }
 }

@@ -9,6 +9,7 @@ export class CookinStepUtil {
       title: null,
       totalTime: null,
       elapsedTime: null,
+      completed: false,
     };
   }
   public static isOnlyIdSet(cookingStep: CookingStep): boolean {

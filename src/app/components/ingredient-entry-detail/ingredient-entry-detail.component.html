@@ -1,4 +1,4 @@
-<div *ngIf="value">
+<ng-container *ngIf="value">
   <ng-container
     *ngIf="editMode === false"
     [ngTemplateOutlet]="viewingIngredientEntry"
@@ -9,40 +9,34 @@
     [ngTemplateOutlet]="editIngredientEntry"
     [ngTemplateOutletContext]="{ $implicit: value }"
   ></ng-container>
-</div>
+</ng-container>
 
 <ng-template #viewingIngredientEntry let-ingredient>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <div class="ingredient-entry-detail__display">
-          <div class="ingredient-entry-detail__display__ingredient">
-            {{ ingredient?.ingredient }}
-          </div>
-          <div class="ingredient-entry-detail__display__amount">
-            {{ ingredient?.amount }}
-          </div>
-          <div class="ingredient-entry-detail__display__unit">
-            {{ ingredient?.unit }}
-          </div>
-        </div>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-divider></mat-divider>
-    </mat-card-content>
-    <mat-card-actions
-      *ngIf="(recipeService.$editMode | async) === true"
-      align="end"
-    >
-      <button mat-icon-button (click)="deleteAction()">
-        <mat-icon fontIcon="delete"></mat-icon>
-      </button>
-      <button mat-icon-button (click)="edit()">
-        <mat-icon fontIcon="edit"></mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+  <div class="ingredient-entry-detail__display">
+    <div class="ingredient-entry-detail__display__ingredient">
+      {{ ingredient?.ingredient }}
+    </div>
+    <div class="ingredient-entry-detail__display__amount">
+      {{ ingredient?.amount }}
+    </div>
+    <div class="ingredient-entry-detail__display__unit">
+      {{ ingredient?.unit }}
+    </div>
+  </div>
+  <div
+    class="ingredient-entry-detail__action"
+    *ngIf="(recipeService.$editMode | async) === true"
+    align="end"
+  >
+    <button mat-icon-button (click)="deleteAction()">
+      <mat-icon fontIcon="delete"></mat-icon>
+    </button>
+    <button mat-icon-button (click)="edit()">
+      <mat-icon fontIcon="edit"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
 </ng-template>
 <ng-template #editIngredientEntry let-ingredient>
   <mat-card [formGroup]="formGroup">

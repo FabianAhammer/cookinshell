@@ -12,53 +12,134 @@
 </div>
 
 <ng-template #viewingCookingStep let-step>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title *ngIf="step?.title">
-        <div class="cookin-step-viz__title">
-          {{ step.title }}
-          <div *ngIf="step?.totalTime" class="cookin-step-viz__title__time">
-            {{ step.totalTime | time }}
+  <div
+    [class.cookin-step-viz__completed]="step.completed"
+    [class.cookin-step-viz__finished-timer]="
+      step.totalTime &&
+      step?.totalTime?._seconds <= step?.elapsedTime?._seconds &&
+      (recipeService.$timerId | async) !== step.id
+    "
+    [class.cookin-step-viz__active-timer]="
+      (recipeService.$timerId | async) === step.id
+    "
+    [class.cookin-step-viz__inactive-timer]="
+      (recipeService.$timerId | async) !== step.id
+    "
+  >
+    <mat-card class="cookin-step-viz__transparent-bg">
+      <mat-card-header>
+        <mat-card-title>
+          <div class="cookin-step-viz__title">
+            {{ step?.title }}
+            <div
+              *ngIf="step?.totalTime"
+              class="cookin-step-viz__title__suppendix"
+              [class.cookin-step-viz__title__suppendix--over]="
+                step?.totalTime?._seconds < (step?.elapsedTime?._seconds || 0)
+              "
+            >
+              <ng-container
+                *ngIf="(recipeService.$timerId | async) !== step.id"
+              >
+                {{ step?.elapsedTime | timeDifference : step?.totalTime }}
+              </ng-container>
+              <ng-container
+                *ngIf="(recipeService.$timerId | async) === step.id"
+              >
+                {{
+                  recipeService.$currentTimerSeconds
+                    | async
+                    | numberTimeDifference : step?.totalTime
+                }}
+              </ng-container>
+            </div>
+            <div
+              *ngIf="!step?.totalTime"
+              class="cookin-step-viz__title__suppendix"
+            >
+              <mat-checkbox
+                [ngModel]="formGroup?.controls?.completed?.value || false"
+                (ngModelChange)="handleCompletedChange($event)"
+              ></mat-checkbox>
+            </div>
           </div>
-        </div>
-      </mat-card-title>
+        </mat-card-title>
 
-      <mat-card-subtitle>
-        <div>
-          <div class="cookin-step-viz__instruction__text">
-            {{ step.description }}
+        <mat-card-subtitle>
+          <div>
+            <div class="cookin-step-viz__instruction__text">
+              {{ step.description }}
+            </div>
           </div>
-        </div>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngIf="step?.totalTime" class="cookin-step-viz__timer">
-        <div class="cookin-step-viz__timer__widget">
-          <div class="cookin-step-viz__timer__button">
-            <button mat-icon-button>
-              <mat-icon> play_arrow</mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="cookin-step-viz__widget-container" *ngIf="step?.totalTime">
+          <div class="cookin-step-viz__start-widget">
+            <button
+              *ngIf="step?.elapsedTime?._seconds"
+              mat-icon-button
+              (click)="resetStepTimer(step.id)"
+            >
+              <mat-icon>replay</mat-icon>
             </button>
           </div>
-          <div class="cookin-step-viz__timer__time">
-            {{ step?.elapsedTime | time }}
-            {{ " | " }}
-            {{ step.totalTime | time }}
+          <div class="cookin-step-viz__timer">
+            <div class="cookin-step-viz__timer__widget">
+              <div class="cookin-step-viz__timer__button">
+                <button mat-icon-button (click)="toggleTimer()">
+                  <mat-icon *ngIf="(recipeService.$timerId | async) === step.id"
+                    >pause</mat-icon
+                  >
+                  <mat-icon *ngIf="(recipeService.$timerId | async) !== step.id"
+                    >play_arrow</mat-icon
+                  >
+                </button>
+              </div>
+              <div class="cookin-step-viz__timer__time">
+                <ng-container
+                  *ngIf="(recipeService.$timerId | async) !== step.id"
+                >
+                  {{ step?.elapsedTime | time }}
+                </ng-container>
+                <ng-container
+                  *ngIf="(recipeService.$timerId | async) === step.id"
+                >
+                  {{
+                    recipeService.$currentTimerSeconds
+                      | async
+                      | timeByNumberPipe
+                  }}
+                </ng-container>
+                {{ " | " }}
+                {{ step.totalTime | time }}
+              </div>
+            </div>
+          </div>
+          <div class="cookin-step-viz__end-widget">
+            <button
+              *ngIf="step?.elapsedTime?._seconds < step?.totalTime?._seconds"
+              mat-icon-button
+              (click)="fastForwardStepTimer(step.id)"
+            >
+              <mat-icon>fast_forward</mat-icon>
+            </button>
           </div>
         </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions
-      *ngIf="(recipeService.$editMode | async) === true"
-      align="end"
-    >
-      <button mat-icon-button (click)="deleteAction()">
-        <mat-icon fontIcon="delete"></mat-icon>
-      </button>
-      <button mat-icon-button (click)="edit()">
-        <mat-icon fontIcon="edit"></mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-content>
+      <mat-card-actions
+        *ngIf="(recipeService.$editMode | async) === true"
+        align="end"
+      >
+        <button mat-icon-button (click)="deleteAction()">
+          <mat-icon fontIcon="delete"></mat-icon>
+        </button>
+        <button mat-icon-button (click)="edit()">
+          <mat-icon fontIcon="edit"></mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </ng-template>
 <ng-template #editCookingStep let-step>
   <mat-card [formGroup]="formGroup">
