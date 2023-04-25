@@ -4,11 +4,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { EntryType, IngridientEntry } from 'src/app/types/cooking-entry';
 
 @Component({
-  selector: 'app-recipe-edit',
-  templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.scss'],
+  selector: 'app-recipe-create',
+  templateUrl: './recipe-create.component.html',
+  styleUrls: ['./recipe-create.component.scss'],
 })
-export class RecipeEditComponent {
+export class RecipeCreateComponent {
   public formGroup: FormGroup<RecipeFormGroup>;
 
   public iconOptions: Array<string> = ['home'];

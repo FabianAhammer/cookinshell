@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationHelper } from 'src/app/utility/navigation-helper.utility';
 import { RecipeService } from './recipe.service';
-import { Observable, filter, map, tap } from 'rxjs';
+import { Observable, combineLatest, filter, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe',
@@ -39,6 +39,27 @@ export class RecipeComponent {
             restartAllTimers || step2?.elapsedTime?._seconds > 0,
           false
         )
+      )
+    );
+  }
+
+  public get elapsedTime(): Observable<number> {
+    return this.recipeService.$recipe.pipe(
+      filter((recipe) => !!recipe),
+      map((recipe) =>
+        recipe.steps.reduce(
+          (totalTime, step2) => totalTime + (step2?.elapsedTime?._seconds || 0),
+          0
+        )
+      )
+    );
+  }
+
+  public get elapsedTimePercent(): Observable<number> {
+    return combineLatest([this.totalTime, this.elapsedTime]).pipe(
+      filter(([totalTime, _]) => totalTime > 0),
+      map(([totalTime, elapsedTime]) =>
+        Math.round((elapsedTime / totalTime) * 100)
       )
     );
   }

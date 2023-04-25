@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { RecipeEditComponent } from 'src/app/components/recipe-edit/recipe-edit.component';
+import { RecipeCreateComponent } from 'src/app/components/recipe/recipe-create/recipe-create.component';
 import { DataService } from 'src/app/services/data.service';
 import * as uuid from 'uuid';
 
@@ -14,7 +14,7 @@ export class OverviewComponent {
 
   public openCreateDialog() {
     this.dialog
-      .open(RecipeEditComponent)
+      .open(RecipeCreateComponent)
       .afterClosed()
       .subscribe((data) => {
         if (!data) {

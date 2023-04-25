@@ -24,8 +24,8 @@
     </div>
   </div>
   <div
-    class="ingredient-entry-detail__action"
     *ngIf="(recipeService.$editMode | async) === true"
+    class="ingredient-entry-detail__action"
     align="end"
   >
     <button mat-icon-button (click)="deleteAction()">

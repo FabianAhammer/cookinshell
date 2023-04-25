@@ -1,0 +1,22 @@
+<mat-card [formGroup]="formGroup">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-form-field appearance="fill">
+        <mat-label>Recipe Name</mat-label>
+        <input formControlName="name" matInput name="name" />
+      </mat-form-field>
+    </mat-card-title>
+    <mat-card-subtitle
+      >Created at {{ recipe.created | date }}</mat-card-subtitle
+    >
+  </mat-card-header>
+  <mat-card-actions align="end">
+    <button mat-icon-button (click)="cancel.emit()">
+      <mat-icon fontIcon="close"></mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="save.emit()" [disabled]="!formGroup.valid">
+      <mat-icon fontIcon="done"></mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

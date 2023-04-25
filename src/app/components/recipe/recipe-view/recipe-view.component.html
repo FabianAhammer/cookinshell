@@ -1,0 +1,38 @@
+<mat-card>
+  <div class="recipe-view__header__time" *ngIf="elapsedTimePercent | async">
+    <div
+      class="recipe-view__header__time__bar"
+      [style.width.%]="elapsedTimePercent | async"
+    ></div>
+  </div>
+  <mat-card-header>
+    <mat-card-title> {{ recipe.name }}</mat-card-title>
+    <mat-card-subtitle>
+      Created at {{ recipe.created | date }}
+    </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="(totalTime | async) != null">
+      {{ totalTime | async | timeByNumberPipe }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-actions align="start">
+    <div class="recipe-view__actions">
+      <button
+        *ngIf="(elapsedTimePercent | async) > 0"
+        mat-icon-button
+        (click)="resetRecipe.emit()"
+      >
+        <mat-icon fontIcon="replay"></mat-icon>
+      </button>
+      <div class="recipe-view__actions__end">
+        <button mat-icon-button (click)="deleteRecipe.emit()">
+          <mat-icon fontIcon="delete"></mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="editRecipe.emit()">
+          <mat-icon fontIcon="edit"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

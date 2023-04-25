@@ -1,0 +1,22 @@
+.recipe-view {
+  &__header {
+    &__time {
+      width: 100%;
+      height: 10px;
+      display: flex;
+      background: #1d1d1d;
+      &__bar {
+        background: var(--accent-color);
+      }
+    }
+  }
+  &__actions {
+    width: 100%;
+    display: flex;
+    &__end {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

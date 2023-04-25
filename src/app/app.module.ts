@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverviewItemComponent } from './components/overview-item/overview-item.component';
-import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
+import { RecipeCreateComponent } from './components/recipe/recipe-create/recipe-create.component';
 import { OverviewComponent } from './pages/overview/overview.component';
 import { RecipeComponent } from './pages/recipe/recipe.component';
 import { MatCardModule } from '@angular/material/card';
@@ -27,6 +27,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TimeByNumberPipe } from './pipes/time-by-number.pipe.ts.pipe';
 import { TimeDifferencePipe } from './pipes/time-difference.pipe';
 import { NumberTimeDifferencePipe } from './pipes/number-time-difference.pipe';
+import { RecipeEditComponent } from './components/recipe/recipe-edit/recipe-edit.component';
+import { RecipeViewComponent } from './components/recipe/recipe-view/recipe-view.component';
 const Material = [
   MatTabsModule,
   MatIconModule,
@@ -45,7 +47,7 @@ const Material = [
     AppComponent,
     OverviewItemComponent,
     OverviewComponent,
-    RecipeEditComponent,
+    RecipeCreateComponent,
     RecipeComponent,
     CookinStepDetailComponent,
     IngredientEntryDetailComponent,
@@ -54,6 +56,8 @@ const Material = [
     TimeByNumberPipe,
     TimeDifferencePipe,
     NumberTimeDifferencePipe,
+    RecipeEditComponent,
+    RecipeViewComponent,
   ],
   imports: [
     ...Material,
