@@ -30,7 +30,6 @@ export class RecipeService {
   private currentTimer = new BehaviorSubject<InternalCookinStepTimer>(null);
   public $currentTimer = this.currentTimer.asObservable();
   public $currentTimerSeconds = this.currentTimer.pipe(
-    filter((timer) => timer !== null),
     map((timer) => timer?.seconds || 0)
   );
   // Interval for the timer

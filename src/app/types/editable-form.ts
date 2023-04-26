@@ -54,10 +54,15 @@ export abstract class BaseEditableComponent<T> implements OnChanges {
   public cancel() {
     this.editMode = false;
     this.setValueToFormGroup(this.value);
+    if (this.isValueEmpty(this.value)) {
+      this.deleteAction();
+    }
   }
 
   public setValueToFormGroup(value: T) {
     // @ts-ignore
     this.formGroup.patchValue(value);
   }
+
+  public abstract isValueEmpty(value: T): boolean;
 }

@@ -40,4 +40,8 @@ export class IngredientEntryDetailComponent extends BaseEditableComponent<Ingrid
       unit: value?.unit,
     });
   }
+
+  public override isValueEmpty(value: IngridientEntry): boolean {
+    return IngredientEntryUtility.isOnlyIdSet(value);
+  }
 }

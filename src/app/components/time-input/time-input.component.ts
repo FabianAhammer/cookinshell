@@ -72,13 +72,9 @@ export class TimeInputComponent
     });
     this.formGroup.controls['timeEnabled'].valueChanges.subscribe((value) => {
       if (value && this.formGroup.controls['time'].disabled) {
-        this.formGroup.controls['time'].patchValue('00:00:00');
         this.formGroup.controls['time'].enable();
-        this.formGroup.updateValueAndValidity();
-      } else if (!value && !this.formGroup.controls['time'].disabled) {
-        this.formGroup.controls['time'].patchValue(null);
+      } else if (value && !this.formGroup.controls['time'].disabled) {
         this.formGroup.controls['time'].disable();
-        this.formGroup.updateValueAndValidity();
       }
     });
   }
@@ -88,9 +84,6 @@ export class TimeInputComponent
     }
   }
   private setTimeValue(value: Time) {
-    if (this.value === value) {
-      return;
-    }
     if (!value?._seconds) {
       this.formGroup.patchValue({
         timeEnabled: false,

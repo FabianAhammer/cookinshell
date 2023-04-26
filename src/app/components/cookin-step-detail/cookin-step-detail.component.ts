@@ -74,4 +74,8 @@ export class CookinStepDetailComponent extends BaseEditableComponent<CookingStep
     this.value = this.formGroup.value as CookingStep;
     this.valueChange.emit(this.value);
   }
+
+  public isValueEmpty(value: CookingStep): boolean {
+    return CookinStepUtil.isOnlyIdSet(value);
+  }
 }

@@ -55,12 +55,38 @@ export class RecipeComponent {
     );
   }
 
+  public get elapsedTimeCurrent(): Observable<number> {
+    return combineLatest([
+      this.recipeService.$timerId,
+      this.recipeService.$currentTimerSeconds,
+      this.recipeService.$recipe,
+    ]).pipe(
+      filter(([_, __, recipe]) => !!recipe),
+      map(([currentId, currentTimerSeconds, recipe]) => {
+        return (
+          recipe.steps
+            .filter((step) => step.id !== currentId)
+            .reduce(
+              (totalTime, step2) =>
+                totalTime + (step2?.elapsedTime?._seconds || 0),
+              0
+            ) + (currentTimerSeconds || 0)
+        );
+      })
+    );
+  }
+
   public get elapsedTimePercent(): Observable<number> {
-    return combineLatest([this.totalTime, this.elapsedTime]).pipe(
+    return combineLatest([this.totalTime, this.elapsedTimeCurrent]).pipe(
       filter(([totalTime, _]) => totalTime > 0),
-      map(([totalTime, elapsedTime]) =>
-        Math.round((elapsedTime / totalTime) * 100)
-      )
+      map(([totalTime, elapsedTime]) => {
+        const usedTime = elapsedTime;
+        if (!usedTime || usedTime === 0) {
+          return 0;
+        }
+
+        return Math.max(Math.round((usedTime / totalTime) * 100), 1);
+      })
     );
   }
 

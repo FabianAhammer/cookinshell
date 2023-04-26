@@ -3,7 +3,16 @@
     <div
       class="recipe-view__header__time__bar"
       [style.width.%]="elapsedTimePercent | async"
-    ></div>
+    >
+      <ng-template
+        [ngTemplateOutlet]="percentInBar"
+        [ngTemplateOutletContext]="{ $implicit: elapsedTimePercent | async }"
+      ></ng-template>
+    </div>
+    <ng-template
+      [ngTemplateOutlet]="percentageAfterBar"
+      [ngTemplateOutletContext]="{ $implicit: elapsedTimePercent | async }"
+    ></ng-template>
   </div>
   <mat-card-header>
     <mat-card-title> {{ recipe.name }}</mat-card-title>
@@ -36,3 +45,16 @@
     </div>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #percentageAfterBar let-percent>
+  <span
+    class="recipe-view__header__percent recipe-view__header__percent--accent"
+    *ngIf="percent < 50"
+    >{{ percent }}%</span
+  >
+</ng-template>
+<ng-template #percentInBar let-percent>
+  <span class="recipe-view__header__percent" *ngIf="percent >= 50"
+    >{{ percent }}%</span
+  >
+</ng-template>
