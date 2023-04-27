@@ -3,7 +3,7 @@
 - [x] Add ability to reset recipes globally
 - [x] Add global time used (percentage)
 - [ ] Add push notifications to phone for how long the timer is on
-- [ ] Add Symbol/img support for the screen
+- [ ] Add Symbol/img support for the overview
 
 # Improvements
 
